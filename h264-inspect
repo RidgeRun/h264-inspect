@@ -13,8 +13,15 @@ fi
 echo h264-inspect
 echo ------------
 
-h264_analyze $FILE | grep 'nal_unit_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.nalutype
+#Useful for large files
+if [ ! -f $1.nalutype ] ; then \
+  echo "Info: Generating $1.nalutype .."
+  h264_analyze $FILE | grep 'nal_unit_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.nalutype
+else
+  echo "Info: Using existing $1.nalutype"
+fi
 
+echo ------------
 echo NAL units
 echo ------------
 
