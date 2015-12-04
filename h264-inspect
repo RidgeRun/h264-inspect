@@ -2,3 +2,25 @@
 #h264-inspect
 #Brief: h264_analyze bash wrapper
 #Author: Jose Lopez
+
+FILE=$1
+
+if [ ! -f /usr/local/bin/h264_analyze ] ; then \
+	echo "Error: Could not find file /usr/local/bin/h264_analyze"
+	exit 1
+fi
+
+echo h264-inspect
+echo ------------
+
+#
+count=`h264_analyze $FILE | grep 'Found NAL' | wc -l`
+echo NALU count: $count
+
+#count=`h264_analyze $FILE | grep 'nal_unit_type : 9' | wc -l`
+#echo AUD: $count
+
+#TODO: Use constants
+#TODO: Write pattern_count function (or loop+array)
+#TODO: Use nal_unit_type
+#TODO: Add glossary
