@@ -13,14 +13,47 @@ fi
 echo h264-inspect
 echo ------------
 
-#
-count=`h264_analyze $FILE | grep 'Found NAL' | wc -l`
-echo NALU count: $count
+h264_analyze $FILE | grep 'nal_unit_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.nalutype
 
-#count=`h264_analyze $FILE | grep 'nal_unit_type : 9' | wc -l`
-#echo AUD: $count
+echo NAL units
+echo ------------
 
+nalu_count=`cat $1.nalutype | wc -l`
+echo NALU count: $nalu_count
+
+sei_count=`cat $1.nalutype | grep '^ 6 $' | wc -l`
+echo SEI count: $sei_count
+
+sps_count=`cat $1.nalutype | grep '^ 7 $' | wc -l`
+echo SPS count: $sps_count
+
+pps_count=`cat $1.nalutype | grep '^ 8 $' | wc -l`
+echo PPS count: $pps_count
+
+aud_count=`cat $1.nalutype | grep '^ 9 $' | wc -l`
+echo AUD count: $aud_count
+
+eoseq_count=`cat $1.nalutype | grep '^ 10 $' | wc -l`
+echo EOSEQ count: $eoseq_count
+
+eostream_count=`cat $1.nalutype | grep '^ 11 $' | wc -l`
+echo EOSTREAM count: $eostream_count
+
+filler_count=`cat $1.nalutype | grep '^ 12 $' | wc -l`
+echo FILLER count: $filler_count
+
+sps_vui_count=`cat $1.nalutype | grep '^ 13 $' | wc -l`
+echo SPS+VUI count: $sps_vui_count
+
+usei_count=`cat $1.nalutype | grep '^ 14 $' | wc -l`
+echo USEI count: $usei_count
+
+echo ------------
+echo Slices
+echo ------------
+echo "Under construction.."
+
+#TODO: Do not create .nalutype file again if its already there.
 #TODO: Use constants
 #TODO: Write pattern_count function (or loop+array)
-#TODO: Use nal_unit_type
 #TODO: Add glossary
