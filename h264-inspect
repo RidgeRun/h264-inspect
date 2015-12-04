@@ -14,7 +14,7 @@ fi
 echo h264-inspect
 echo ------------
 
-#Useful for large files
+#Generate .nalutype file from h264_analyze exercise
 if [ ! -f $1.nalutype ] ; then \
   echo "Info: Generating $1.nalutype .."
   h264_analyze $FILE | grep 'nal_unit_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.nalutype
@@ -56,10 +56,37 @@ echo SPS+VUI count: $sps_vui_count
 usei_count=`cat $1.nalutype | grep '^ 14 $' | wc -l`
 echo USEI count: $usei_count
 
+#Generate .slicetype file from h264_analyze exercise
+echo ------------
+if [ ! -f $1.slicetype ] ; then \
+  echo "Info: Generating $1.slicetype .."
+  h264_analyze $FILE | grep 'slice_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.slicetype
+else
+  echo "Info: Using existing $1.slicetype"
+fi
+
 echo ------------
 echo Slices
 echo ------------
-echo "Under construction.."
+
+pw_count=`cat $1.slicetype | grep '^ 0 $' | wc -l`
+echo P* count: $pw_count
+
+p_count=`cat $1.slicetype | grep '^ 5 $' | wc -l`
+echo P count: $p_count
+
+bw_count=`cat $1.slicetype | grep '^ 1 $' | wc -l`
+echo B* count: $bw_count
+
+b_count=`cat $1.slicetype | grep '^ 6 $' | wc -l`
+echo B count: $b_count
+
+iw_count=`cat $1.slicetype | grep '^ 2 $' | wc -l`
+echo I* count: $iw_count
+
+i_count=`cat $1.slicetype | grep '^ 7 $' | wc -l`
+echo I count: $i_count
+echo ------------
 
 #TODO: Use constants
 #TODO: Write pattern_count function (or loop+array)
