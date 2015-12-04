@@ -2,6 +2,7 @@
 #h264-inspect
 #Brief: h264_analyze bash wrapper
 #Author: Jose Lopez
+#Copyright: RidgeRun LLC 2015
 
 FILE=$1
 
@@ -60,7 +61,6 @@ echo Slices
 echo ------------
 echo "Under construction.."
 
-#TODO: Do not create .nalutype file again if its already there.
 #TODO: Use constants
 #TODO: Write pattern_count function (or loop+array)
 #TODO: Add glossary
