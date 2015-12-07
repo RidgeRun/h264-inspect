@@ -15,12 +15,9 @@ echo h264-inspect
 echo ------------
 
 #Generate .nalutype file from h264_analyze exercise
-if [ ! -f $1.nalutype ] ; then \
-  echo "Info: Generating $1.nalutype .."
-  h264_analyze $FILE | grep 'nal_unit_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.nalutype
-else
-  echo "Info: Using existing $1.nalutype"
-fi
+echo "Info: Generating $1.nalutype .."
+h264_analyze $FILE | grep 'nal_unit_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.nalutype
+
 
 echo ------------
 echo NAL units
@@ -58,12 +55,8 @@ echo USEI count: $usei_count
 
 #Generate .slicetype file from h264_analyze exercise
 echo ------------
-if [ ! -f $1.slicetype ] ; then \
-  echo "Info: Generating $1.slicetype .."
-  h264_analyze $FILE | grep 'slice_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.slicetype
-else
-  echo "Info: Using existing $1.slicetype"
-fi
+echo "Info: Generating $1.slicetype .."
+h264_analyze $FILE | grep 'slice_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.slicetype
 
 echo ------------
 echo Slices
@@ -91,3 +84,4 @@ echo ------------
 #TODO: Use constants
 #TODO: Write pattern_count function (or loop+array)
 #TODO: Add glossary
+#TODO: Renable fast read, needs checksum verification
