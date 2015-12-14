@@ -107,20 +107,20 @@ echo ------------
 echo Slices
 echo ------------
 
-pw_count=`cat $FILE.slicetype | grep '^ 0 $' | wc -l`
-echo P* count: $pw_count
+pm_count=`cat $FILE.slicetype | grep '^ 0 $' | wc -l`
+echo Pm count: $pm_count
 
 p_count=`cat $FILE.slicetype | grep '^ 5 $' | wc -l`
 echo P count: $p_count
 
-bw_count=`cat $FILE.slicetype | grep '^ 1 $' | wc -l`
-echo B* count: $bw_count
+bm_count=`cat $FILE.slicetype | grep '^ 1 $' | wc -l`
+echo Bm count: $bm_count
 
 b_count=`cat $FILE.slicetype | grep '^ 6 $' | wc -l`
 echo B count: $b_count
 
-iw_count=`cat $FILE.slicetype | grep '^ 2 $' | wc -l`
-echo I* count: $iw_count
+im_count=`cat $FILE.slicetype | grep '^ 2 $' | wc -l`
+echo Im count: $im_count
 
 i_count=`cat $FILE.slicetype | grep '^ 7 $' | wc -l`
 echo I count: $i_count
