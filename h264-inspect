@@ -68,6 +68,9 @@ echo ------------
 nalu_count=`cat $FILE.nalutype | wc -l`
 echo NALU count: $nalu_count
 
+idr_count=`cat $FILE.nalutype | grep '^ 5 $' | wc -l`
+echo IDR count: $idr_count
+
 sei_count=`cat $FILE.nalutype | grep '^ 6 $' | wc -l`
 echo SEI count: $sei_count
 
