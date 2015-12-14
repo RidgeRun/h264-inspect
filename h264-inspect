@@ -126,7 +126,8 @@ i_count=`cat $FILE.slicetype | grep '^ 7 $' | wc -l`
 echo I count: $i_count
 echo ------------
 
-#TODO: Use constants
-#TODO: Write pattern_count function (or loop+array)
-#TODO: Add glossary
+
+#TODO: Add missing slice count
+#TODO: Modularize h264 logic
+#TODO: Add glossary entries
 #TODO: Renable fast read, needs checksum verification
