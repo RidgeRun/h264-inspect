@@ -4,80 +4,122 @@
 #Author: Jose Lopez
 #Copyright: RidgeRun LLC 2015
 
-FILE=$1
+show_info ()
+{
+  echo "Brief: h264_analyze bash wrapper"
+  echo "RidgeRun LLC 2015"
+}
 
+show_usage ()
+{
+  echo ""
+  echo "Usage:"
+  echo "./h264-inspect [args]"
+  echo "  -g,--glossary: h264 terminology"
+  echo "  -f, --file: inspect h264 content of file"
+  echo "  -h,--help: help message"
+}
+
+show_help ()
+{
+  show_info
+  show_usage
+}
+
+show_glossary ()
+{
+  echo "Glossary"
+  echo "Under construction.."
+}
+
+echo h264-inspect
+echo ------------
+
+#Input parse
+if [[ $1 = "-g" ]] || [[ $1 = "--glossary" ]] ; then \
+  show_glossary
+  exit 0
+elif [[ $1 = "-f" ]] || [[ $1 = "--file" ]] ; then \
+  FILE=$2
+else
+  show_help
+  exit 0
+fi
+
+#Inspect start
 if [ ! -f /usr/local/bin/h264_analyze ] ; then \
 	echo "Error: Could not find file /usr/local/bin/h264_analyze"
 	exit 1
 fi
 
-echo h264-inspect
-echo ------------
+if [ -z $FILE ] || [ ! -f $FILE ] ; then \
+	echo "Error: Could not find file $FILE"
+	exit 1
+fi
 
 #Generate .nalutype file from h264_analyze exercise
-echo "Info: Generating $1.nalutype .."
-h264_analyze $FILE | grep 'nal_unit_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.nalutype
-
+echo "Info: Generating $FILE.nalutype .."
+h264_analyze $FILE | grep 'nal_unit_type' | sed 's/.*://' | cut -f1 -d"(" &> $FILE.nalutype
 
 echo ------------
 echo NAL units
 echo ------------
 
-nalu_count=`cat $1.nalutype | wc -l`
+nalu_count=`cat $FILE.nalutype | wc -l`
 echo NALU count: $nalu_count
 
-sei_count=`cat $1.nalutype | grep '^ 6 $' | wc -l`
+sei_count=`cat $FILE.nalutype | grep '^ 6 $' | wc -l`
 echo SEI count: $sei_count
 
-sps_count=`cat $1.nalutype | grep '^ 7 $' | wc -l`
+sps_count=`cat $FILE.nalutype | grep '^ 7 $' | wc -l`
 echo SPS count: $sps_count
 
-pps_count=`cat $1.nalutype | grep '^ 8 $' | wc -l`
+pps_count=`cat $FILE.nalutype | grep '^ 8 $' | wc -l`
 echo PPS count: $pps_count
 
-aud_count=`cat $1.nalutype | grep '^ 9 $' | wc -l`
+aud_count=`cat $FILE.nalutype | grep '^ 9 $' | wc -l`
 echo AUD count: $aud_count
 
-eoseq_count=`cat $1.nalutype | grep '^ 10 $' | wc -l`
+eoseq_count=`cat $FILE.nalutype | grep '^ 10 $' | wc -l`
 echo EOSEQ count: $eoseq_count
 
-eostream_count=`cat $1.nalutype | grep '^ 11 $' | wc -l`
+eostream_count=`cat $FILE.nalutype | grep '^ 11 $' | wc -l`
 echo EOSTREAM count: $eostream_count
 
-filler_count=`cat $1.nalutype | grep '^ 12 $' | wc -l`
+filler_count=`cat $FILE.nalutype | grep '^ 12 $' | wc -l`
 echo FILLER count: $filler_count
 
-sps_vui_count=`cat $1.nalutype | grep '^ 13 $' | wc -l`
+sps_vui_count=`cat $FILE.nalutype | grep '^ 13 $' | wc -l`
 echo SPS+VUI count: $sps_vui_count
 
-usei_count=`cat $1.nalutype | grep '^ 14 $' | wc -l`
+usei_count=`cat $FILE.nalutype | grep '^ 14 $' | wc -l`
 echo USEI count: $usei_count
 
 #Generate .slicetype file from h264_analyze exercise
 echo ------------
-echo "Info: Generating $1.slicetype .."
-h264_analyze $FILE | grep 'slice_type' | sed 's/.*://' | cut -f1 -d"(" &> $1.slicetype
+echo "Info: Generating $FILE.slicetype .."
+h264_analyze $FILE | grep 'slice_type' | sed 's/.*://' | cut -f1 -d"(" &> $FILE.slicetype
 
 echo ------------
 echo Slices
 echo ------------
 
-pw_count=`cat $1.slicetype | grep '^ 0 $' | wc -l`
+pw_count=`cat $FILE.slicetype | grep '^ 0 $' | wc -l`
 echo P* count: $pw_count
 
-p_count=`cat $1.slicetype | grep '^ 5 $' | wc -l`
+p_count=`cat $FILE.slicetype | grep '^ 5 $' | wc -l`
 echo P count: $p_count
 
-bw_count=`cat $1.slicetype | grep '^ 1 $' | wc -l`
+bw_count=`cat $FILE.slicetype | grep '^ 1 $' | wc -l`
 echo B* count: $bw_count
 
-b_count=`cat $1.slicetype | grep '^ 6 $' | wc -l`
+b_count=`cat $FILE.slicetype | grep '^ 6 $' | wc -l`
 echo B count: $b_count
 
-iw_count=`cat $1.slicetype | grep '^ 2 $' | wc -l`
+iw_count=`cat $FILE.slicetype | grep '^ 2 $' | wc -l`
 echo I* count: $iw_count
 
-i_count=`cat $1.slicetype | grep '^ 7 $' | wc -l`
+i_count=`cat $FILE.slicetype | grep '^ 7 $' | wc -l`
 echo I count: $i_count
 echo ------------
 
