@@ -29,7 +29,23 @@ show_help ()
 show_glossary ()
 {
   echo "Glossary"
-  echo "Under construction.."
+  echo "--------"
+  echo "NAL"
+  echo "--------"
+  echo "NALU: Network Abstraction Layer Unit"
+  echo "IDR: Instantaneous Decoding Refresh picture"
+  echo "SEI: Supplemental Enhancement Information"
+  echo "SPS: Sequence Parameter Set"
+  echo "PPS: Picture Parameter Set"
+  echo "AUD: Access Unit Delimiter"
+  echo "EOSEQ: End Of Sequence"
+  echo "EOSTREAM: End Of Stream"
+  echo "--------"
+  echo "Slices/frames"
+  echo "--------"
+  echo "I: Contains intra macroblocks"
+  echo "P: Contains intra or predicted macroblocks"
+  echo "B: Contains intra, predicted or bi-predicted macroblocks"
 }
 
 echo h264-inspect
